@@ -1,0 +1,15 @@
+---
+description: Orchestra CRM project conventions
+alwaysApply: true
+---
+
+# Orchestra Project Conventions
+
+- Never mention AI authorship or co-authorship in code, commits, or docs.
+- All commit messages in English; keep them short with bullet points when needed.
+- Code comments only for non-obvious implementation or business logic — not for the author.
+- Document all API endpoints in Swagger.
+- Shared types: use `Dto` suffix or `API` suffix (e.g. `TaskDto`, `UserAPI`).
+- Frontend: API calls live in `services/`, not in components or hooks directly.
+- Frontend styling: BEM naming, SCSS, design tokens in `styles/tokens/`.
+- Backend: feature modules under `src/modules/`, Drizzle schema under `src/db/schema/`.
