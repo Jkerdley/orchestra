@@ -1,0 +1,203 @@
+@use '../../../../styles/tokens/variables' as *;
+@use '../../../../styles/mixins/helpers' as *;
+
+.app-layout {
+  display: grid;
+  grid-template-columns: $sidebar-width 1fr;
+  min-height: 100vh;
+  transition: grid-template-columns $transition-base;
+
+  &--collapsed {
+    grid-template-columns: $sidebar-width-collapsed 1fr;
+  }
+
+  &__sidebar {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    border-right: 1px solid $color-border;
+    background: rgba(255, 255, 255, 0.82);
+    backdrop-filter: blur(16px);
+  }
+
+  &__main {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: $space-4;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: $space-6;
+  }
+
+  &__brand {
+    display: flex;
+    align-items: center;
+    gap: $space-3;
+  }
+
+  &__logo {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: $radius-sm;
+    background: linear-gradient(135deg, $color-accent, #60a5fa);
+    color: white;
+    font-weight: 700;
+  }
+
+  &__title {
+    font-size: 1.05rem;
+    font-weight: 650;
+    letter-spacing: -0.02em;
+  }
+
+  &__toggle {
+    width: 32px;
+    height: 32px;
+    border: 1px solid $color-border;
+    border-radius: $radius-sm;
+    background: $color-bg-elevated;
+    color: $color-text-muted;
+    transition: background $transition-fast, color $transition-fast;
+
+    &:hover {
+      background: $color-bg-subtle;
+      color: $color-text;
+    }
+  }
+
+  &__team {
+    margin-bottom: $space-5;
+  }
+
+  &__team-label {
+    display: block;
+    margin-bottom: $space-2;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: $color-text-muted;
+  }
+
+  &__team-select {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: $space-3 $space-4;
+    border: 1px solid $color-border;
+    border-radius: $radius-md;
+    background: $color-bg-elevated;
+    transition: box-shadow $transition-fast, border-color $transition-fast;
+
+    &:hover {
+      border-color: rgba(37, 99, 235, 0.25);
+      box-shadow: $shadow-sm;
+    }
+  }
+
+  &__chevron {
+    color: $color-text-muted;
+    font-size: 0.75rem;
+  }
+
+  &__nav {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: $space-2;
+    flex: 1;
+  }
+
+  &__link {
+    display: flex;
+    align-items: center;
+    gap: $space-3;
+    padding: $space-3 $space-4;
+    border-radius: $radius-md;
+    color: $color-text-muted;
+    transition: background $transition-fast, color $transition-fast, transform $transition-fast;
+
+    &:hover {
+      background: $color-bg-subtle;
+      color: $color-text;
+    }
+
+    &--active {
+      background: $color-accent-soft;
+      color: $color-accent;
+      font-weight: 600;
+    }
+  }
+
+  &__icon {
+    width: 20px;
+    text-align: center;
+  }
+
+  &__footer {
+    margin-top: auto;
+    padding-top: $space-4;
+    border-top: 1px solid $color-border;
+  }
+
+  &__user {
+    display: flex;
+    align-items: center;
+    gap: $space-3;
+  }
+
+  &__avatar {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: $radius-pill;
+    background: $color-bg-subtle;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+
+  &__user-meta {
+    display: grid;
+    gap: 2px;
+    min-width: 0;
+  }
+
+  &__user-name {
+    @include truncate;
+    font-size: 0.92rem;
+    font-weight: 600;
+  }
+
+  &__user-role {
+    font-size: 0.78rem;
+    color: $color-text-muted;
+    text-transform: capitalize;
+  }
+
+  &--collapsed {
+    .sidebar__team,
+    .sidebar__user-meta {
+      display: none;
+    }
+
+    .sidebar__link {
+      justify-content: center;
+      padding-inline: $space-3;
+    }
+  }
+}

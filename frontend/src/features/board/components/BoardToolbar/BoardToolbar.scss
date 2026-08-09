@@ -1,0 +1,73 @@
+@use '../../../../styles/tokens/variables' as *;
+
+.board-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-4;
+  padding: $space-3 $space-6;
+
+  &__left,
+  &__right {
+    display: flex;
+    align-items: center;
+    gap: $space-3;
+  }
+
+  &__badge {
+    padding: $space-2 $space-3;
+    border-radius: $radius-pill;
+    background: $color-accent-soft;
+    color: $color-accent;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  &__count {
+    color: $color-text-muted;
+    font-size: 0.88rem;
+  }
+
+  &__button {
+    display: inline-flex;
+    align-items: center;
+    gap: $space-2;
+    padding: $space-2 $space-4;
+    border-radius: $radius-md;
+    border: 1px solid $color-border;
+    background: $color-bg-elevated;
+    color: $color-text;
+    transition:
+      background $transition-fast,
+      border-color $transition-fast,
+      box-shadow $transition-fast,
+      transform $transition-fast;
+
+    &:hover {
+      border-color: rgba(37, 99, 235, 0.2);
+      box-shadow: $shadow-sm;
+    }
+
+    &--ghost {
+      background: transparent;
+    }
+
+    &--primary {
+      border-color: transparent;
+      background: $color-accent;
+      color: white;
+
+      &:hover {
+        box-shadow: $shadow-md;
+        transform: translateY(-1px);
+      }
+    }
+  }
+
+  &__chevron {
+    font-size: 0.72rem;
+    color: $color-text-muted;
+  }
+}

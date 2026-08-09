@@ -1,0 +1,35 @@
+@use '../tokens/variables' as *;
+
+@mixin focus-ring {
+  outline: 2px solid $color-accent-soft;
+  outline-offset: 2px;
+}
+
+@mixin truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@mixin card-surface {
+  background: $color-bg-elevated;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  box-shadow: $shadow-sm;
+}
+
+@mixin breakpoint-up($bp) {
+  @if $bp == tablet {
+    @media (min-width: $bp-tablet) {
+      @content;
+    }
+  } @else if $bp == desktop {
+    @media (min-width: $bp-desktop) {
+      @content;
+    }
+  } @else if $bp == wide {
+    @media (min-width: $bp-wide) {
+      @content;
+    }
+  }
+}

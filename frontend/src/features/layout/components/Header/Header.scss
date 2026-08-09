@@ -1,0 +1,32 @@
+@use '../../../../styles/tokens/variables' as *;
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-4;
+  min-height: $header-height;
+  padding: $space-4 $space-6;
+  border-bottom: 1px solid $color-border;
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(12px);
+
+  &__title {
+    margin: 0;
+    font-size: 1.35rem;
+    font-weight: 650;
+    letter-spacing: -0.03em;
+  }
+
+  &__subtitle {
+    margin: $space-1 0 0;
+    color: $color-text-muted;
+    font-size: 0.92rem;
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: $space-3;
+  }
+}
