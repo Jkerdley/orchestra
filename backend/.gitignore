@@ -1,0 +1,39 @@
+# Зависимости
+node_modules/
+
+# Сборка
+dist/
+.next/
+.nuxt/
+
+# Переменные окружения (содержат секреты)
+.env
+.env.local
+.env.*.local
+
+# Логи
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Кэш и временные файлы
+.turbo/
+.cache/
+*.tsbuildinfo
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Drizzle (если используете drizzle/meta генерируется локально, опционально)
+# drizzle/meta/   ← раскомментируйте, если не хотите хранить метаданные
+# Сами миграции (папка drizzle/*.sql) принято коммитить, поэтому не игнорируем
