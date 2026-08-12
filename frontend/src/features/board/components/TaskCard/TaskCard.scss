@@ -3,8 +3,9 @@
 
 .task-card {
   @include card-surface;
+  isolation: isolate;
+  overflow: hidden;
   padding: $space-4;
-  border-top: 3px solid var(--task-category-color);
   cursor: grab;
   transition:
     box-shadow $transition-base,
@@ -17,6 +18,49 @@
     transform: translateY(-1px);
   }
 
+  &::before {
+    position: absolute;
+    z-index: 0;
+    top: -44px;
+    left: -42px;
+    width: 138px;
+    height: 104px;
+    border-radius: 42% 58% 67% 33% / 47% 35% 65% 53%;
+    background: var(--task-category-color);
+    content: '';
+    filter: blur(28px);
+    opacity: 0.19;
+    pointer-events: none;
+    transform: rotate(-13deg);
+  }
+
+  &--shape-1::before {
+    top: -35px;
+    left: -30px;
+    width: 125px;
+    height: 118px;
+    border-radius: 61% 39% 48% 52% / 39% 62% 38% 61%;
+    transform: rotate(22deg);
+  }
+
+  &--shape-2::before {
+    top: -52px;
+    left: -54px;
+    width: 150px;
+    height: 92px;
+    border-radius: 55% 45% 35% 65% / 64% 39% 61% 36%;
+    transform: rotate(-28deg);
+  }
+
+  &--shape-3::before {
+    top: -28px;
+    left: -48px;
+    width: 112px;
+    height: 122px;
+    border-radius: 38% 62% 58% 42% / 58% 45% 55% 42%;
+    transform: rotate(8deg);
+  }
+
   &--dragging {
     opacity: 0.92;
     box-shadow: $shadow-lg;
@@ -26,6 +70,8 @@
 
   &__head {
     display: flex;
+    position: relative;
+    z-index: 1;
     align-items: center;
     justify-content: space-between;
     gap: $space-2;
@@ -63,6 +109,8 @@
   }
 
   &__title {
+    position: relative;
+    z-index: 1;
     margin: 0 0 $space-2;
     font-size: 0.95rem;
     font-weight: 600;
@@ -70,6 +118,8 @@
   }
 
   &__description {
+    position: relative;
+    z-index: 1;
     margin: 0 0 $space-3;
     color: $color-text-muted;
     font-size: 0.84rem;
@@ -82,6 +132,8 @@
 
   &__meta {
     display: flex;
+    position: relative;
+    z-index: 1;
     align-items: center;
     gap: $space-2;
     color: $color-text-muted;

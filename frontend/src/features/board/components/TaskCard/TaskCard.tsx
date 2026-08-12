@@ -37,7 +37,7 @@ export function TaskCard({ task, assignee, categoryColor }: TaskCardProps) {
     <article
       ref={setNodeRef}
       style={style}
-      className={`task-card ${isDragging ? 'task-card--dragging' : ''}`}
+      className={`task-card task-card--shape-${task.id % 4} ${isDragging ? 'task-card--dragging' : ''}`}
       {...attributes}
       {...listeners}
     >
