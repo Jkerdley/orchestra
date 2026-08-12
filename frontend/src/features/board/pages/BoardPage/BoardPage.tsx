@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Header } from '../../../layout/components/Header/Header';
 import type { BoardTypeAPI, TaskAPI } from '../../../../shared/types/orchestra.types';
@@ -35,6 +35,13 @@ export function BoardPage() {
     xp: getXpRequiredForLevel(24) - 680,
   });
   const [lastXpReward, setLastXpReward] = useState<number | null>(null);
+  const rewardedTaskIds = useRef(
+    new Set(
+      orchestraMock.tasks
+        .filter((task) => task.status === 'done')
+        .map((task) => task.id),
+    ),
+  );
 
   const filteredTasks = useMemo(() => {
     const teamId = orchestraMock.currentUser.teamId;
@@ -107,6 +114,9 @@ export function BoardPage() {
   };
 
   const handleTaskCompleted = (task: TaskAPI) => {
+    if (rewardedTaskIds.current.has(task.id)) return;
+
+    rewardedTaskIds.current.add(task.id);
     const earnedXp = getTaskXp(task);
     setLastXpReward(earnedXp);
     setPlayerProgress((current) => {
