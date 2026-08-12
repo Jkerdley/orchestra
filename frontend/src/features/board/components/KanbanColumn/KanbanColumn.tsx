@@ -9,9 +9,16 @@ interface KanbanColumnProps {
   title: string;
   tasks: TaskAPI[];
   usersById: Map<number, UserAPI>;
+  categoryColors: Record<string, string>;
 }
 
-export function KanbanColumn({ id, title, tasks, usersById }: KanbanColumnProps) {
+export function KanbanColumn({
+  id,
+  title,
+  tasks,
+  usersById,
+  categoryColors,
+}: KanbanColumnProps) {
   const { setNodeRef, isOver } = useDroppable({ id });
 
   return (
@@ -29,6 +36,7 @@ export function KanbanColumn({ id, title, tasks, usersById }: KanbanColumnProps)
               key={task.id}
               task={task}
               assignee={task.assigneeId ? usersById.get(task.assigneeId) : undefined}
+              categoryColor={task.epic ? categoryColors[task.epic] : undefined}
             />
           ))}
         </div>

@@ -1,14 +1,16 @@
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
+import type { CSSProperties } from 'react';
 import type { TaskAPI, UserAPI } from '../../../../shared/types/orchestra.types';
 import './TaskCard.scss';
 
 interface TaskCardProps {
   task: TaskAPI;
   assignee?: UserAPI;
+  categoryColor?: string;
 }
 
-export function TaskCard({ task, assignee }: TaskCardProps) {
+export function TaskCard({ task, assignee, categoryColor }: TaskCardProps) {
   const {
     attributes,
     listeners,
@@ -21,7 +23,8 @@ export function TaskCard({ task, assignee }: TaskCardProps) {
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
-  };
+    '--task-category-color': categoryColor ?? '#94a3b8',
+  } as CSSProperties;
 
   const dueLabel = task.dueDate
     ? new Date(task.dueDate).toLocaleDateString(undefined, {

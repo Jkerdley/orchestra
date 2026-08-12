@@ -9,6 +9,9 @@ interface BoardToolbarProps {
   onQueryChange: (value: string) => void;
   onOnlyMineChange: (value: boolean) => void;
   onCreateTask: () => void;
+  categories: string[];
+  categoryColors: Record<string, string>;
+  onCategoryColorChange: (category: string, color: string) => void;
 }
 
 export function BoardToolbar({
@@ -19,8 +22,12 @@ export function BoardToolbar({
   onQueryChange,
   onOnlyMineChange,
   onCreateTask,
+  categories,
+  categoryColors,
+  onCategoryColorChange,
 }: BoardToolbarProps) {
   const [filtersOpen, setFiltersOpen] = useState(false);
+  const [categoryColorsOpen, setCategoryColorsOpen] = useState(false);
 
   return (
     <div className="board-toolbar">
@@ -60,6 +67,32 @@ export function BoardToolbar({
                 />
                 <span>Assigned to me</span>
               </label>
+            </div>
+          )}
+        </div>
+        <div className="board-toolbar__filter">
+          <button
+            type="button"
+            className="board-toolbar__button board-toolbar__button--ghost"
+            aria-expanded={categoryColorsOpen}
+            onClick={() => setCategoryColorsOpen((open) => !open)}
+          >
+            Categories <span className="board-toolbar__chevron">▾</span>
+          </button>
+          {categoryColorsOpen && (
+            <div className="board-toolbar__category-menu">
+              <span className="board-toolbar__menu-label">Category colors</span>
+              {categories.map((category) => (
+                <label key={category} className="board-toolbar__category-option">
+                  <input
+                    type="color"
+                    value={categoryColors[category]}
+                    onChange={(event) => onCategoryColorChange(category, event.target.value)}
+                    aria-label={`${category} color`}
+                  />
+                  <span>{category}</span>
+                </label>
+              ))}
             </div>
           )}
         </div>
