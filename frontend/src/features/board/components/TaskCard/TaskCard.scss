@@ -3,6 +3,7 @@
 
 .task-card {
   @include card-surface;
+  position: relative;
   isolation: isolate;
   overflow: hidden;
   padding: $space-4;
@@ -14,7 +15,7 @@
 
   &:hover {
     box-shadow: $shadow-md;
-    border-color: rgba(37, 99, 235, 0.18);
+    border-color: color-mix(in srgb, var(--task-category-color) 28%, white);
     transform: translateY(-1px);
   }
 
@@ -32,6 +33,15 @@
     opacity: 0.19;
     pointer-events: none;
     transform: rotate(-13deg);
+    transition:
+      top $transition-slow,
+      left $transition-slow,
+      width $transition-slow,
+      height $transition-slow,
+      border-radius $transition-slow,
+      filter $transition-slow,
+      opacity $transition-slow,
+      transform $transition-slow;
   }
 
   &--shape-1::before {
@@ -59,6 +69,17 @@
     height: 122px;
     border-radius: 38% 62% 58% 42% / 58% 45% 55% 42%;
     transform: rotate(8deg);
+  }
+
+  &:hover::before {
+    top: -28px;
+    left: -28px;
+    width: calc(100% + 56px);
+    height: calc(100% + 56px);
+    border-radius: 45% 55% 52% 48% / 52% 42% 58% 48%;
+    filter: blur(20px);
+    opacity: 0.25;
+    transform: rotate(0deg) translate(5%, 5%);
   }
 
   &--dragging {
