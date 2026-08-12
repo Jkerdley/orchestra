@@ -154,6 +154,62 @@
     border-top: 1px solid $color-border;
   }
 
+  &__level {
+    display: flex;
+    align-items: center;
+    gap: $space-3;
+    padding: $space-3;
+    margin-bottom: $space-4;
+    border: 1px solid rgba(91, 91, 214, 0.12);
+    border-radius: $radius-md;
+    background: linear-gradient(135deg, $color-violet-soft, #fafaff);
+  }
+
+  &__level-icon {
+    display: grid;
+    place-items: center;
+    flex: 0 0 auto;
+    width: 34px;
+    height: 34px;
+    border-radius: 11px;
+    background: linear-gradient(145deg, $color-accent, #8482ea);
+    box-shadow: 0 5px 12px rgba(91, 91, 214, 0.22);
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 800;
+  }
+
+  &__level-info {
+    display: grid;
+    flex: 1;
+    min-width: 0;
+    gap: 3px;
+  }
+
+  &__level-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+
+  &__level-progress {
+    height: 4px;
+    overflow: hidden;
+    border-radius: $radius-pill;
+    background: rgba(91, 91, 214, 0.14);
+
+    span {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+      background: $color-accent;
+    }
+  }
+
+  &__level-caption {
+    color: $color-text-muted;
+    font-size: 0.65rem;
+  }
+
   &__user {
     display: flex;
     align-items: center;

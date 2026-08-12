@@ -87,6 +87,18 @@ function Sidebar({ collapsed, onToggleSidebar }: SidebarProps) {
       </ul>
 
       <div className="sidebar__footer">
+        {!collapsed && (
+          <div className="sidebar__level">
+            <div className="sidebar__level-icon" aria-hidden="true">24</div>
+            <div className="sidebar__level-info">
+              <span className="sidebar__level-label">Growth level</span>
+              <div className="sidebar__level-progress">
+                <span style={{ width: '68%' }} />
+              </div>
+              <span className="sidebar__level-caption">680 / 1,000 XP</span>
+            </div>
+          </div>
+        )}
         <div className="sidebar__user">
           <span className="sidebar__avatar">
             {currentUser.name

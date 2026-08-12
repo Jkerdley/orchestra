@@ -14,6 +14,10 @@
     gap: $space-3;
   }
 
+  &__right {
+    position: relative;
+  }
+
   &__badge {
     padding: $space-2 $space-3;
     border-radius: $radius-pill;
@@ -46,7 +50,7 @@
       transform $transition-fast;
 
     &:hover {
-      border-color: rgba(37, 99, 235, 0.2);
+      border-color: rgba(91, 91, 214, 0.2);
       box-shadow: $shadow-sm;
     }
 
@@ -64,10 +68,102 @@
         transform: translateY(-1px);
       }
     }
+
+    &--selected {
+      border-color: rgba(91, 91, 214, 0.2);
+      background: $color-violet-soft;
+      color: $color-accent-dark;
+    }
+  }
+
+  &__search {
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+    width: 190px;
+    padding: 0 $space-3;
+    height: 38px;
+    border: 1px solid $color-border;
+    border-radius: $radius-md;
+    background: $color-bg-elevated;
+    color: $color-text-muted;
+    transition: border-color $transition-fast, box-shadow $transition-fast;
+
+    &:focus-within {
+      border-color: rgba(91, 91, 214, 0.5);
+      box-shadow: 0 0 0 3px rgba(91, 91, 214, 0.08);
+    }
+
+    input {
+      width: 100%;
+      min-width: 0;
+      border: 0;
+      outline: none;
+      background: transparent;
+      color: $color-text;
+      font: inherit;
+      font-size: 0.82rem;
+
+      &::placeholder {
+        color: $color-text-muted;
+      }
+    }
+  }
+
+  &__filter {
+    position: relative;
+  }
+
+  &__filter-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: $radius-pill;
+    background: $color-accent;
+  }
+
+  &__filter-menu {
+    position: absolute;
+    z-index: 10;
+    top: calc(100% + $space-2);
+    right: 0;
+    width: 178px;
+    padding: $space-2;
+    border: 1px solid $color-border;
+    border-radius: $radius-md;
+    background: $color-bg-elevated;
+    box-shadow: $shadow-md;
+  }
+
+  &__filter-option {
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+    padding: $space-2;
+    color: $color-text;
+    font-size: 0.82rem;
+    cursor: pointer;
+
+    input {
+      accent-color: $color-accent;
+    }
   }
 
   &__chevron {
     font-size: 0.72rem;
     color: $color-text-muted;
+  }
+
+  @media (max-width: $bp-tablet) {
+    flex-wrap: wrap;
+    padding-inline: $space-4;
+
+    &__right {
+      width: 100%;
+      flex-wrap: wrap;
+    }
+
+    &__search {
+      flex: 1;
+    }
   }
 }
