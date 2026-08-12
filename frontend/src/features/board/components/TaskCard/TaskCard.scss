@@ -5,6 +5,7 @@
   @include card-surface;
   position: relative;
   isolation: isolate;
+  width: 100%;
   overflow: hidden;
   padding: $space-4;
   cursor: grab;
