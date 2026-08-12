@@ -7,11 +7,34 @@ import { BoardToolbar } from '../../components/BoardToolbar/BoardToolbar';
 import { KanbanBoard } from '../../components/KanbanBoard/KanbanBoard';
 import './BoardPage.scss';
 
+const MAX_LEVEL = 200;
+const DEFAULT_CATEGORY_COLORS: Record<string, string> = {
+  Onboarding: '#db7d4e',
+  Platform: '#5b5bd6',
+  Board: '#168a72',
+  UX: '#bd5da7',
+  Release: '#d49a24',
+};
+
+function getXpRequiredForLevel(level: number) {
+  return 800 + level * 50 + level * level * 9;
+}
+
+function getTaskXp(task: TaskAPI) {
+  return 120 + Math.min(180, Math.round(task.loggedMinutes / 15) * 15);
+}
+
 export function BoardPage() {
   const { boardType = 'team' } = useParams<{ boardType: BoardTypeAPI }>();
   const [tasks, setTasks] = useState<TaskAPI[]>(orchestraMock.tasks);
   const [query, setQuery] = useState('');
   const [onlyMine, setOnlyMine] = useState(false);
+  const [categoryColors, setCategoryColors] = useState(DEFAULT_CATEGORY_COLORS);
+  const [playerProgress, setPlayerProgress] = useState({
+    level: 24,
+    xp: getXpRequiredForLevel(24) - 680,
+  });
+  const [lastXpReward, setLastXpReward] = useState<number | null>(null);
 
   const filteredTasks = useMemo(() => {
     const teamId = orchestraMock.currentUser.teamId;
@@ -48,6 +71,15 @@ export function BoardPage() {
     });
   }, [filteredTasks, onlyMine, query]);
 
+  const categories = useMemo(
+    () =>
+      Array.from(new Set(tasks.flatMap((task) => (task.epic ? [task.epic] : [])))).sort(),
+    [tasks],
+  );
+
+  const xpRequired = getXpRequiredForLevel(playerProgress.level);
+  const xpProgress = Math.min(100, (playerProgress.xp / xpRequired) * 100);
+
   const handleCreateTask = () => {
     const nextId = Math.max(...tasks.map((task) => task.id), 0) + 1;
     const currentColumnTasks = tasks.filter(
@@ -74,6 +106,22 @@ export function BoardPage() {
     ]);
   };
 
+  const handleTaskCompleted = (task: TaskAPI) => {
+    const earnedXp = getTaskXp(task);
+    setLastXpReward(earnedXp);
+    setPlayerProgress((current) => {
+      let level = current.level;
+      let xp = current.xp + earnedXp;
+
+      while (level < MAX_LEVEL && xp >= getXpRequiredForLevel(level)) {
+        xp -= getXpRequiredForLevel(level);
+        level += 1;
+      }
+
+      return { level, xp };
+    });
+  };
+
   return (
     <div className="board-page">
       <Header title={title} subtitle={subtitle} />
@@ -94,13 +142,23 @@ export function BoardPage() {
           <div>
             <span className="board-page__eyebrow">Your growth</span>
             <div className="board-page__growth-title">
-              <strong>Level 24</strong>
-              <span>680 XP to level 25</span>
+              <strong>Level {playerProgress.level}</strong>
+              <span>
+                {playerProgress.level === MAX_LEVEL
+                  ? 'Maximum level reached'
+                  : `${xpRequired - playerProgress.xp} XP to level ${playerProgress.level + 1}`}
+              </span>
+            </div>
+            <div
+              className="board-page__growth-progress"
+              aria-label={`${playerProgress.xp} of ${xpRequired} XP`}
+            >
+              <span style={{ width: `${xpProgress}%` }} />
             </div>
           </div>
           <div className="board-page__achievement">
             <span aria-hidden="true">⚡</span>
-            <span>3-day focus streak</span>
+            <span>{lastXpReward ? `+${lastXpReward} XP earned` : '3-day focus streak'}</span>
           </div>
         </div>
       </section>
@@ -112,10 +170,17 @@ export function BoardPage() {
         onQueryChange={setQuery}
         onOnlyMineChange={setOnlyMine}
         onCreateTask={handleCreateTask}
+        categories={categories}
+        categoryColors={categoryColors}
+        onCategoryColorChange={(category, color) =>
+          setCategoryColors((current) => ({ ...current, [category]: color }))
+        }
       />
       <KanbanBoard
         tasks={visibleTasks}
         users={orchestraMock.users}
+        categoryColors={categoryColors}
+        onTaskCompleted={handleTaskCompleted}
         onTasksChange={(nextTasks) => {
           setTasks((current) =>
             current.map(

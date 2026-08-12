@@ -20,9 +20,17 @@ interface KanbanBoardProps {
   tasks: TaskAPI[];
   users: UserAPI[];
   onTasksChange: (tasks: TaskAPI[]) => void;
+  categoryColors: Record<string, string>;
+  onTaskCompleted: (task: TaskAPI) => void;
 }
 
-export function KanbanBoard({ tasks, users, onTasksChange }: KanbanBoardProps) {
+export function KanbanBoard({
+  tasks,
+  users,
+  onTasksChange,
+  categoryColors,
+  onTaskCompleted,
+}: KanbanBoardProps) {
   const [activeTaskId, setActiveTaskId] = useState<number | null>(null);
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 6 } }),
@@ -71,6 +79,7 @@ export function KanbanBoard({ tasks, users, onTasksChange }: KanbanBoardProps) {
     const overTask = tasks.find((task) => task.id === Number(overId));
 
     const targetStatus = overColumn ?? overTask?.status ?? activeTaskItem.status;
+    const taskCompleted = activeTaskItem.status !== 'done' && targetStatus === 'done';
     const columnTasks = tasks
       .filter((task) => task.status === targetStatus && task.id !== activeId)
       .sort((a, b) => a.sortOrder - b.sortOrder);
@@ -114,10 +123,12 @@ export function KanbanBoard({ tasks, users, onTasksChange }: KanbanBoardProps) {
             : task,
         ),
       );
+      if (taskCompleted) onTaskCompleted(activeTaskItem);
       return;
     }
 
     onTasksChange(reordered);
+    if (taskCompleted) onTaskCompleted(activeTaskItem);
   };
 
   return (
@@ -135,6 +146,7 @@ export function KanbanBoard({ tasks, users, onTasksChange }: KanbanBoardProps) {
             title={column.label}
             tasks={tasksByColumn[column.id]}
             usersById={usersById}
+            categoryColors={categoryColors}
           />
         ))}
       </div>
@@ -142,6 +154,7 @@ export function KanbanBoard({ tasks, users, onTasksChange }: KanbanBoardProps) {
         {activeTask ? (
           <TaskCard
             task={activeTask}
+            categoryColor={activeTask.epic ? categoryColors[activeTask.epic] : undefined}
             assignee={
               activeTask.assigneeId
                 ? usersById.get(activeTask.assigneeId)

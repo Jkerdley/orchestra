@@ -134,6 +134,50 @@
     box-shadow: $shadow-md;
   }
 
+  &__category-menu {
+    position: absolute;
+    z-index: 10;
+    top: calc(100% + $space-2);
+    right: 0;
+    display: grid;
+    width: 190px;
+    gap: $space-1;
+    padding: $space-3;
+    border: 1px solid $color-border;
+    border-radius: $radius-md;
+    background: $color-bg-elevated;
+    box-shadow: $shadow-md;
+  }
+
+  &__menu-label {
+    padding-bottom: $space-2;
+    color: $color-text-muted;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  &__category-option {
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+    padding: $space-1 0;
+    color: $color-text;
+    font-size: 0.8rem;
+    cursor: pointer;
+
+    input {
+      width: 26px;
+      height: 26px;
+      padding: 0;
+      border: 0;
+      border-radius: 7px;
+      background: transparent;
+      cursor: pointer;
+    }
+  }
+
   &__filter-option {
     display: flex;
     align-items: center;

@@ -4,6 +4,7 @@
 .task-card {
   @include card-surface;
   padding: $space-4;
+  border-top: 3px solid var(--task-category-color);
   cursor: grab;
   transition:
     box-shadow $transition-base,
@@ -34,8 +35,8 @@
   &__epic {
     padding: 2px $space-2;
     border-radius: $radius-pill;
-    background: $color-accent-soft;
-    color: $color-accent;
+    background: color-mix(in srgb, var(--task-category-color) 14%, white);
+    color: color-mix(in srgb, var(--task-category-color) 80%, $color-text);
     font-size: 0.72rem;
     font-weight: 600;
     text-transform: uppercase;

@@ -83,6 +83,23 @@
     background: linear-gradient(110deg, #fffdf8, $color-gold-soft);
   }
 
+  &__growth-progress {
+    width: min(240px, 100%);
+    height: 5px;
+    margin-top: $space-2;
+    overflow: hidden;
+    border-radius: $radius-pill;
+    background: rgba(207, 138, 33, 0.16);
+
+    span {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #e9ae45, $color-gold);
+      transition: width $transition-slow;
+    }
+  }
+
   &__growth-medal {
     display: grid;
     place-items: center;
