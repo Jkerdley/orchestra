@@ -16,7 +16,6 @@ export function KanbanColumn({ id, title, tasks, usersById }: KanbanColumnProps)
 
   return (
     <section
-      ref={setNodeRef}
       className={`kanban-column ${isOver ? 'kanban-column--over' : ''}`}
     >
       <header className="kanban-column__header">
@@ -24,7 +23,7 @@ export function KanbanColumn({ id, title, tasks, usersById }: KanbanColumnProps)
         <span className="kanban-column__count">{tasks.length}</span>
       </header>
       <SortableContext items={tasks.map((task) => task.id)} strategy={verticalListSortingStrategy}>
-        <div className="kanban-column__list">
+        <div ref={setNodeRef} className="kanban-column__list">
           {tasks.map((task) => (
             <TaskCard
               key={task.id}
