@@ -55,6 +55,7 @@
     display: grid;
     align-content: start;
     flex: 1;
+    min-height: 360px;
     gap: $space-3;
     padding-bottom: $space-2;
   }
