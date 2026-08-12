@@ -3,8 +3,8 @@
 .kanban-column {
   display: flex;
   flex-direction: column;
-  min-width: 280px;
-  max-width: 320px;
+  flex: 0 0 304px;
+  width: 304px;
   min-height: 440px;
   padding: $space-3;
   border-radius: $radius-lg;
